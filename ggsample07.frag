@@ -32,11 +32,11 @@ void main(void)
   float rd = dot(nn, nl);
   float rs = dot(nr, nv);
 
-  float cosc = sqrt(1 - dot(nl , t));
-  float cosa = max(sqrt(1 - dot(nl , t)) * sqrt(1 - dot(nl , t)) - dot(l, t)* dot(v, t) , 0);
+  float cosc = sqrt(1 - dot(nl , t) * dot(nl , t));
+  float cosa = max(sqrt(1 - dot(nl , t) *  dot(nl , t)) * sqrt(1 - dot(nv , t) * dot(nv , t)) - dot(l, t)* dot(v, t) , 0);
   vec4 iamb = kamb * lamb;
   vec4 idiff = max(rd, 0.0) * kdiff * ldiff;
-  vec4 ispec = pow(max(rs, 0.0), kshi) * kspec * lspec;
+  vec4 ispec = pow(max(cosa * cosc, 0.0), kshi) * kspec * lspec;
 
   fc = iamb + idiff + ispec;
 }
